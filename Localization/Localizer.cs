@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace CSL.LocalizationHelper
+namespace ModUtils.LocalizationHelper
 {
     public sealed class Localizer
     {
