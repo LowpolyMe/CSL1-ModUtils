@@ -20,27 +20,21 @@ namespace ModUtils.XMLHelper
 
         public static bool TryLoad<T>(string path, out T value)
         {
-            try
+            if (!File.Exists(path))
             {
-                if (!File.Exists(path))
-                {
-                    value = default(T);
-                    return false;
-                }
-
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    object result = serializer.Deserialize(stream);
-                    if (result is T)
-                    {
-                        value = (T)result;
-                        return true;
-                    }
-                }
+                value = default(T);
+                return false;
             }
-            catch
+
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
+                object result = serializer.Deserialize(stream);
+                if (result is T)
+                {
+                    value = (T)result;
+                    return true;
+                }
             }
 
             value = default(T);
